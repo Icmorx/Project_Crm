@@ -1,5 +1,6 @@
 package it.logicainformatica.projectcrm.db;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -7,8 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.logicainformatica.projectcrm.bean.ProjectCrmBean;
+import it.logicainformatica.suitecrm.bean.AnagraficaUtente;
 
 public class ProjectCrmDB {
 
@@ -49,15 +53,15 @@ public class ProjectCrmDB {
 
 	}
 
-	// STAMPA I DATI
-	public void stampaDati() {
+	// STAMPA I DATI DA DB
+	public List<ProjectCrmBean> stampaDati() {
 
 		// CREO L'OGGETTO CONNECTION
 		Connection dbconn = null;
+		
+		List<ProjectCrmBean> lista = new ArrayList<ProjectCrmBean>();
 
 		try {
-
-			FileWriter scrittura = new FileWriter("Project_Crm.txt");
 
 			// VALORIZZO L'OGGETTO CONNECTION
 			dbconn = db.getConnessione();
@@ -81,18 +85,10 @@ public class ProjectCrmDB {
 				p.setCognome(rs.getNString("cognome"));
 				p.setTelefono(rs.getString("telefono"));
 
-				scrittura.write("Id: " + p.getId() + ",");
-				scrittura.write("Nome: " + p.getNome() + ",");
-				scrittura.write("Cognome: " + p.getCognome() + ",");
-				scrittura.write("Telefono: " + p.getTelefono() + ",");
- 
-				// CHIUSRA WRITER
-				scrittura.close();
+				lista.add(p);
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -102,5 +98,32 @@ public class ProjectCrmDB {
 			}
 		}
 
+	}
+ 
+	// CREO E SCRIVO SUL FILE
+	public void newFile() {
+		String path = "C:/Project_Crm.txt";
+
+		try {
+			File file = new File(path);
+			FileWriter write = new FileWriter("Project_Crm.txt");
+			ProjectCrmBean p = new ProjectCrmBean();
+
+			if(file.exists()) {
+				write.write("Id: " + p.getId() + ",");
+				write.write("Nome: " + p.getNome() + ",");
+				write.write("Cognome: " + p.getCognome() + ",");
+				write.write("Telefono: " + p.getTelefono() + ",");
+			} else if (file.createNewFile()){
+				write.write("Id: " + p.getId() + ",");
+				write.write("Nome: " + p.getNome() + ",");
+				write.write("Cognome: " + p.getCognome() + ",");
+				write.write("Telefono: " + p.getTelefono() + ",");
+			}
+			write.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
