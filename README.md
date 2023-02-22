@@ -6,18 +6,15 @@ Per inserire i file sul DB ho creato un nuovo DB chiamato project_crm, dove al s
 
 Per creare la tabella ho usato la script SQL:
 
+```sql
 CREATE TABLE anagrafica (
-
     id int NOT NULL AUTO_INCREMENT,
-    
     nome varchar(255) NOT NULL,
-    
     cognome varchar(255) NOT NULL,
-    
     telefono varchar(255) NOT NULL,
-    
     PRIMARY KEY (id)
 );
+```
 
 Per il telefono ho usato il varchar per poter permettere all'utente di inserire il prefisso internazionale con il "+" prima dei numeri
 
