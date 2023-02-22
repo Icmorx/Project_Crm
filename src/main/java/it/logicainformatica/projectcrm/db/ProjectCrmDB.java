@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.logicainformatica.projectcrm.bean.ProjectCrmBean;
-import it.logicainformatica.suitecrm.bean.AnagraficaUtente;
 
 public class ProjectCrmDB {
 
