@@ -57,7 +57,7 @@ public class ProjectCrmDB {
 
 		// CREO L'OGGETTO CONNECTION
 		Connection dbconn = null;
-		
+
 		List<ProjectCrmBean> lista = new ArrayList<ProjectCrmBean>();
 
 		try {
@@ -98,31 +98,54 @@ public class ProjectCrmDB {
 		}
 		return lista;
 	}
- 
+
 	// CREO E SCRIVO SUL FILE
-	public void newFile(ProjectCrmBean pB) {
+	public void scrivoFile(ProjectCrmBean pB) throws IOException{
+		
+		Connection dbconn = null;
+		
 		String path = "C:/Project_Crm.txt";
-
+		
+		File nuovoFile = new File(path);
+		
+		FileWriter fW = new FileWriter("Project_Crm.txt");
+		
 		try {
-			File file = new File(path);
-			FileWriter write = new FileWriter("Project-Crm.txt");
-			ProjectCrmBean p = new ProjectCrmBean();
-
-			if(file.exists()) {
-				write.write("Id: " + p.getId() + ",");
-				write.write("Nome: " + p.getNome() + ",");
-				write.write("Cognome: " + p.getCognome() + ",");
-				write.write("Telefono: " + p.getTelefono() + ",");
-			} else if (file.createNewFile()){
-				write.write("Id: " + p.getId() + ",");
-				write.write("Nome: " + p.getNome() + ",");
-				write.write("Cognome: " + p.getCognome() + ",");
-				write.write("Telefono: " + p.getTelefono() + ",");
+			// VALORIZZO L'OGGETTO CONNECTION
+			dbconn = db.getConnessione();
+			
+			// PREPARO L'ISTRUZIONE SQL
+			PreparedStatement statement = dbconn.prepareStatement("SELECT * FROM anagrafica");
+			
+			// LANCIO LA QUERY SUL DATA BASE E I RISULTATI ME LI RESTITUSCIE IN UN OGGETTO
+			// DI TIPO RESULTSET
+			ResultSet rs = statement.executeQuery();
+			
+			// CICLO I VALORI CHE ARRIVANO DAL DB
+			while (rs.next()) {
+				
+				// IMPORTO CLASSE BEAN
+				ProjectCrmBean p = new ProjectCrmBean();
+				
+				// INSERENDO IL NOME DELLA COLONNA E MI PRENDO IL VALORE
+				p.setId(rs.getInt("id"));
+				p.setNome(rs.getString("nome"));
+				p.setCognome(rs.getNString("cognome"));
+				p.setTelefono(rs.getString("telefono"));
+				
+				// SCRIVO I DATI NEL FILE DI TESTO
+				fW.write("Id: " + p.getId() + ",");
+				fW.write("Nome: " + p.getNome() + ",");
+				fW.write("Cognome: " + p.getCognome() + ",");
+				fW.write("Telefono: " + p.getTelefono() + ",");
+				
 			}
-			write.close();
-
-		} catch (IOException e) {
+		}catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			fW.close();
 		}
 	}
+
+
 }

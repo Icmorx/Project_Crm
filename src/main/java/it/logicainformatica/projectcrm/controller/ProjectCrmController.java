@@ -21,17 +21,17 @@ import it.logicainformatica.projectcrm.bean.ProjectCrmBean;
 import it.logicainformatica.projectcrm.db.ProjectCrmDB;
 
 @RestController
-@RequestMapping("/gestione-anagrafica")
-public class ProjectCrmRest {
+@RequestMapping("/project-crm")
+public class ProjectCrmController {
 
 	ProjectCrmDB p = new ProjectCrmDB();
 
 	// SERVIZIO CHE SCRIVE
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public void inserisciAnagrafica(@RequestBody ProjectCrmBean pB) {
+	public void inserisciAnagrafica(@RequestBody ProjectCrmBean pB) throws IOException {
 		p.inserisciUtente(pB);
-		p.newFile(pB);
+		p.scrivoFile(pB);
 	}
 
 	// SERVIZIO CHE STAMPA DAL DB
@@ -41,7 +41,7 @@ public class ProjectCrmRest {
 		return lista;
 	}
 
-	// SERVIZIO
+	// SERVIZIO CHE LEGGE DAL FILE
 	@GetMapping("/leggiDati")
 	public ResponseEntity<String> leggiDati() {
 
@@ -66,7 +66,6 @@ public class ProjectCrmRest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		return null;
+		return new ResponseEntity<String>("Errore", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
