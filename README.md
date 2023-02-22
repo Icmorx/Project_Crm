@@ -19,3 +19,5 @@ CREATE TABLE anagrafica (
 Per il telefono ho usato il varchar per poter permettere all'utente di inserire il prefisso internazionale con il "+" prima dei numeri
 
 Il file di testo si può trovare nella cartella del progetto con il nome Project_Crm.txt
+
+Si possono utilizzare gli endpoint scrivendo http://localhost:8080/swagger-ui.html 
