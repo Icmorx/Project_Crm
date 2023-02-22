@@ -1,8 +1,15 @@
 package it.logicainformatica.projectcrm.controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,11 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import it.logicainformatica.projectcrm.bean.ProjectCrmBean;
 import it.logicainformatica.projectcrm.db.ProjectCrmDB;
 
-
 @RestController
 @RequestMapping("/gestione-anagrafica")
 public class ProjectCrmRest {
-	
+
 	ProjectCrmDB p = new ProjectCrmDB();
 
 	// SERVIZIO CHE SCRIVE
@@ -27,11 +33,40 @@ public class ProjectCrmRest {
 		p.inserisciUtente(pB);
 		p.newFile(pB);
 	}
-	
+
 	// SERVIZIO CHE STAMPA DAL DB
 	@GetMapping("/stampaDati")
 	public List<ProjectCrmBean> stampaDati() {
 		List<ProjectCrmBean> lista = p.stampaDati();
 		return lista;
+	}
+
+	// SERVIZIO
+	@GetMapping("/leggiDati")
+	public ResponseEntity<String> leggiDati() {
+
+		try {
+			File file = new File("Project_Crm.txt");
+
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+
+			StringBuilder sB = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sB.append(line);
+				sB.append("/n");
+			}
+
+			reader.close();
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.TEXT_PLAIN);
+			return new ResponseEntity<String>(sB.toString(), headers, HttpStatus.OK);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

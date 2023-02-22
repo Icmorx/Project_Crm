@@ -105,7 +105,7 @@ public class ProjectCrmDB {
 
 		try {
 			File file = new File(path);
-			FileWriter write = new FileWriter("Project_Crm.txt");
+			FileWriter write = new FileWriter("Project-Crm.txt");
 			ProjectCrmBean p = new ProjectCrmBean();
 
 			if(file.exists()) {
