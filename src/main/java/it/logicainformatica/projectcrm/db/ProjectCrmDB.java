@@ -37,7 +37,7 @@ public class ProjectCrmDB {
 			statement.setString(2, p.getCognome());
 			statement.setString(3, p.getTelefono());
 
-			// ESEGUO LA QUERY SUL DB
+			// ESEGUO LA QUERY
 			statement.execute();
 
 		} catch (SQLException e) {
@@ -100,7 +100,7 @@ public class ProjectCrmDB {
 	}
  
 	// CREO E SCRIVO SUL FILE
-	public void newFile() {
+	public void newFile(ProjectCrmBean pB) {
 		String path = "C:/Project_Crm.txt";
 
 		try {
