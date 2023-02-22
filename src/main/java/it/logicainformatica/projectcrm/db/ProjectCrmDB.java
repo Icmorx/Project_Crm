@@ -131,7 +131,7 @@ public class ProjectCrmDB {
 				// IMPORTO CLASSE BEAN
 				ProjectCrmBean p = new ProjectCrmBean();
 
-				// INSERENDO IL NOME DELLA COLONNA E MI PRENDO IL VALORE
+				// INSERISCO IL NOME DELLA COLONNA E MI PRENDO IL VALORE
 				p.setId(rs.getInt("id"));
 				p.setNome(rs.getString("nome"));
 				p.setCognome(rs.getNString("cognome"));
