@@ -1,5 +1,8 @@
 package it.logicainformatica.projectcrm.db;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,13 +49,15 @@ public class ProjectCrmDB {
 
 	}
 	
-	
+	// STAMPA I DATI
 	public void stampaDati() {
 
 		// CREO L'OGGETTO CONNECTION
 		Connection dbconn = null;
-
+		
 		try {
+			
+			FileWriter scrittura = new FileWriter("Project_Crm.txt");
 
 			// VALORIZZO L'OGGETTO CONNECTION
 			dbconn = db.getConnessione();
@@ -67,16 +72,26 @@ public class ProjectCrmDB {
 			// CICLO I VALORI CHE ARRIVANO DAL DB
 			while (rs.next()) {
 
+				// IMPORTO CLASSE BEAN
 				ProjectCrmBean p = new ProjectCrmBean();
 				
 				// INSERENDO IL NOME DELLA COLONNA E MI PRENDO IL VALORE
+				p.setId(rs.getInt("id"));
 				 p.setNome(rs.getString("nome"));
 				 p.setCognome(rs.getNString("cognome"));
 				 p.setTelefono(rs.getString("telefono"));
-
+				 
+				 scrittura.write("Id: " + p.getId() + ",");
+				 scrittura.write("Nome: " + p.getNome() + ",");
+				 scrittura.write("Cognome: " + p.getCognome() + ",");
+				 scrittura.write("Telefono: " + p.getTelefono() + ",");
+				 
+				 scrittura.close();
 			}
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
