@@ -78,7 +78,7 @@ public class ProjectCrmDB {
 				// IMPORTO CLASSE BEAN
 				ProjectCrmBean p = new ProjectCrmBean();
 
-				// INSERENDO IL NOME DELLA COLONNA E MI PRENDO IL VALORE
+				// INSERISCO IL NOME DELLA COLONNA E MI PRENDO IL VALORE
 				p.setId(rs.getInt("id"));
 				p.setNome(rs.getString("nome"));
 				p.setCognome(rs.getNString("cognome"));
@@ -99,7 +99,7 @@ public class ProjectCrmDB {
 		return lista;
 	}
 
-	// CREO E SCRIVO SUL FILE
+	// CREO IL FILE E SCRIVO SUL FILE
 	public void scrivoFile(ProjectCrmBean pB) throws IOException {
 
 		// CREO L'OGGETTO CONNECTION
@@ -111,7 +111,7 @@ public class ProjectCrmDB {
 		// CREO UN NUOVO FILE
 		File nuovoFile = new File(path);
 
-		// CREO L'OGGETO WRITE PER SCRIVERE I DATI SUL FILE
+		// CREO L'OGGETO fW PER SCRIVERE I DATI SUL FILE
 		FileWriter fW = new FileWriter("Project_Crm.txt");
 
 		try {
@@ -147,6 +147,7 @@ public class ProjectCrmDB {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
+			// CHIUDO L'OGETTO FILEWRITER E LA CONNESSIONE AL DB
 			fW.close();
 			try {
 				dbconn.close();
