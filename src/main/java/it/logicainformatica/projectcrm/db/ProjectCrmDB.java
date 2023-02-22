@@ -97,7 +97,7 @@ public class ProjectCrmDB {
 				e.printStackTrace();
 			}
 		}
-
+		return lista;
 	}
  
 	// CREO E SCRIVO SUL FILE
