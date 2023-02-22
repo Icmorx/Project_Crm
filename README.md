@@ -20,4 +20,4 @@ Per il telefono ho usato il varchar per poter permettere all'utente di inserire 
 
 Il file di testo si può trovare nella cartella del progetto con il nome Project_Crm.txt
 
-Si possono utilizzare gli endpoint scrivendo `http://localhost:8080/swagger-ui.html`
+Si possono utilizzare gli endpoint scrivendo `http://localhost:8080/swagger-ui.html`, oppure direttamente da qui cliccando su http://localhost:8080/swagger-ui.html
