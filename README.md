@@ -23,3 +23,7 @@ Il file di testo si può trovare nella cartella del progetto con il nome Project
 Si possono utilizzare gli endpoint scrivendo `http://localhost:8080/swagger-ui.html`, oppure direttamente da qui cliccando su http://localhost:8080/swagger-ui.html
 
 E' necessario startare il DB usando ad esempio XAMPP per poter utilizzare il `POST` per inserire i dati sul DB e il `GET` per leggere i dati dal DB, invece non è necessario startare il DB se si vuole utilizzare il `GET` per stampare i dati dal file di testo 
+
+Ecco un esempio di quello che viene visualizzato sullo swagger:
+
+![Esempio](Swagger_ProjectCrm.png)
