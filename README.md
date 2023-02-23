@@ -26,4 +26,4 @@ E' necessario startare il DB usando ad esempio XAMPP per poter utilizzare il `PO
 
 Ecco un esempio di quello che viene visualizzato sullo swagger:
 
-![Esempio](Swagger_ProjectCrm.png)
+![Esempio](images/Swagger_ProjectCrm.png)
