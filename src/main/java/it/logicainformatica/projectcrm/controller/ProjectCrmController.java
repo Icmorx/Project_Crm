@@ -54,7 +54,7 @@ public class ProjectCrmController {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				sB.append(line);
-				sB.append("/n");
+				sB.append("\n");
 			}
 
 			reader.close();
