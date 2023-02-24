@@ -141,7 +141,7 @@ public class ProjectCrmDB {
 				fW.write("Id: " + p.getId() + ",");
 				fW.write("Nome: " + p.getNome() + ",");
 				fW.write("Cognome: " + p.getCognome() + ",");
-				fW.write("Telefono: " + p.getTelefono() + ",");
+				fW.write("Telefono: " + p.getTelefono() + "\n");
 
 			}
 		} catch (Exception e) {
