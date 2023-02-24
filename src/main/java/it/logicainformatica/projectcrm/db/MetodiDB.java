@@ -13,7 +13,6 @@ import java.util.List;
 
 import it.logicainformatica.projectcrm.bean.AnagraficaBean;
 
-
 // classe che al suo interno contine tutti i metodi che interagiscono con il DB
 public class MetodiDB {
 
@@ -48,10 +47,10 @@ public class MetodiDB {
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
 			System.out.println("Errore generico nel metodo inserisciUtente" + e.getMessage());
-		} finally {  // nel finaly chiudo la connessione con il DB
+		} finally { // nel finaly chiudo la connessione con il DB
 			try {
 				dbconn.close();
-			} catch (SQLException e) { //gestisco eventuali errori di tipo sql
+			} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 				e.printStackTrace();
 			}
 		}
@@ -64,7 +63,7 @@ public class MetodiDB {
 		// creo l'oggetto connection
 		Connection dbconn = null;
 
-		// creo un oggetto di tipo lista 
+		// creo un oggetto di tipo lista
 		List<AnagraficaBean> lista = new ArrayList<AnagraficaBean>();
 
 		try {
@@ -75,7 +74,8 @@ public class MetodiDB {
 			// preparo l'istruzione sql
 			PreparedStatement statement = dbconn.prepareStatement("SELECT * FROM anagrafica");
 
-			// lancio la query sul DB e mi restituisce i dati in un'oggetto di tipo ResultSet
+			// lancio la query sul DB e mi restituisce i dati in un'oggetto di tipo
+			// ResultSet
 			ResultSet rs = statement.executeQuery();
 
 			// ciclo i valori che prendo dal db
@@ -94,13 +94,13 @@ public class MetodiDB {
 				lista.add(p);
 			}
 
-		} catch (SQLException e) { //gestisco eventuali errori di tipo sql
+		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
 			System.out.println("Errore SQL nel metodo stampaDati " + e.getMessage());
 		} finally { // nel finaly chiudo la connessione con il DB
 			try {
 				dbconn.close();
-			} catch (SQLException e) { //gestisco eventuali errori di tipo sql
+			} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 				e.printStackTrace();
 			}
 		}
@@ -109,37 +109,28 @@ public class MetodiDB {
 	}
 
 	// creo il file e scrivo sul file
-	public void writeFile(AnagraficaBean pB) throws IOException {
+	public void writeFile(AnagraficaBean anaBean) throws IOException {
 
-		// STRINGA CON LA DIRECTORY DEL FILE TXT
-		// String path = "C:/Project_Crm.txt";
-
-		// creo un nuovo file specificando la directory e il nome che dovrà avere il file
+		// creo un nuovo file specificando la directory e il nome che dovrà avere il
+		// file
 		File file = new File("Project_Crm.txt");
 
-		// creo l'oggetto che mi serve per scrivere i dati sul file e gli passo l'oggetto file
-		FileWriter fW = new FileWriter(file);
+		// creo l'oggetto che mi serve per scrivere i dati sul file e gli passo
+		// l'oggetto file
+		FileWriter fW = new FileWriter(file, true); // aggiungo il parametro true per scrivere al fondo del file
 
 		try {
-
-			// controllo se il file di testo esiste, se esiste scrivo i dati al suo interno
-			if (file.exists()) {
-				fW.write(pB.getId() + ",");
-				fW.write(pB.getNome() + ",");
-				fW.write(pB.getCognome() + ",");
-				fW.write(pB.getTelefono() + "\n");
-			} // se il file non esiste creo un nuovo file e scrivo i dati al suo interno
-			else if (file.createNewFile()) {
-				fW.write(pB.getId() + ",");
-				fW.write(pB.getNome() + ",");
-				fW.write(pB.getCognome() + ",");
-				fW.write(pB.getTelefono() + "\n");
-			}
+			// scrivo i dati nel file
+			fW.write(anaBean.getId() + ",");
+			fW.write(anaBean.getNome() + ",");
+			fW.write(anaBean.getCognome() + ",");
+			fW.write(anaBean.getTelefono() + "\n");
 
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
-			System.out.println("Erroe nel metodo scrivoFile " + e.getMessage());
-		} finally { // nel finaly chiudo l'oggetto FileWriter
+			System.out.println("Errore nel metodo scrivoFile " + e.getMessage());
+		} finally {
+			// chiudo l'oggetto FileWriter
 			fW.close();
 		}
 	}
