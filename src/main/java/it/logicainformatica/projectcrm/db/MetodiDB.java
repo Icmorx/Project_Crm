@@ -11,14 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.logicainformatica.projectcrm.bean.ProjectCrmBean;
+import it.logicainformatica.projectcrm.bean.AnagraficaBean;
 
-public class ProjectCrmDB {
+
+// classe che al suo interno contine tutti i metodi che interagiscono con il DB
+public class MetodiDB {
 
 	DataBase db = new DataBase();
 
 	// metodo che serve per inserire i dati dell utente sul DB
-	public void inserisciUtente(ProjectCrmBean p) {
+	public void inserisciUtente(AnagraficaBean p) {
 
 		// creo l'oggetto connection
 		Connection dbconn = null;
@@ -57,13 +59,13 @@ public class ProjectCrmDB {
 	}
 
 	// metodo per prendere i dati dal DB
-	public List<ProjectCrmBean> getDati() {
+	public List<AnagraficaBean> getDati() {
 
 		// creo l'oggetto connection
 		Connection dbconn = null;
 
 		// creo un oggetto di tipo lista 
-		List<ProjectCrmBean> lista = new ArrayList<ProjectCrmBean>();
+		List<AnagraficaBean> lista = new ArrayList<AnagraficaBean>();
 
 		try {
 
@@ -80,7 +82,7 @@ public class ProjectCrmDB {
 			while (rs.next()) {
 
 				// importo la classe con i set i e get
-				ProjectCrmBean p = new ProjectCrmBean();
+				AnagraficaBean p = new AnagraficaBean();
 
 				// inserendo il nome della colonna mi prendo il dato contenuto in essa
 				p.setId(rs.getInt("id"));
@@ -107,7 +109,7 @@ public class ProjectCrmDB {
 	}
 
 	// creo il file e scrivo sul file
-	public void scrivoFile(ProjectCrmBean pB) throws IOException {
+	public void writeFile(AnagraficaBean pB) throws IOException {
 
 		// STRINGA CON LA DIRECTORY DEL FILE TXT
 		// String path = "C:/Project_Crm.txt";

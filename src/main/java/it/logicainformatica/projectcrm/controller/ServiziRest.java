@@ -17,31 +17,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.logicainformatica.projectcrm.bean.ProjectCrmBean;
-import it.logicainformatica.projectcrm.db.ProjectCrmDB;
+import it.logicainformatica.projectcrm.bean.AnagraficaBean;
+import it.logicainformatica.projectcrm.db.MetodiDB;
 
+// classe che al suo interno contine tutti i servizi rest, uno di tipo post e due di tipo get
 @RestController
 @RequestMapping("/project-crm")
-public class ProjectCrmController {
+public class ServiziRest {
 
-	ProjectCrmDB p = new ProjectCrmDB();
+	MetodiDB dbMetod = new MetodiDB();
 
-	// SERVIZIO CHE SCRIVE
+	// servizio rest di tipo post che al suo interno richiama i due metodi che
+	// inseriscono i dati, uno sul DB e uno in file di testo presenti nella classe
+	// metodi
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public void inserisciAnagrafica(@RequestBody ProjectCrmBean pB) throws IOException {
-		p.inserisciUtente(pB);
-		p.scrivoFile(pB);
+	public void inserisciAnagrafica(@RequestBody AnagraficaBean pB) throws IOException {
+		dbMetod.inserisciUtente(pB);
+		dbMetod.writeFile(pB);
 	}
 
-	// SERVIZIO CHE STAMPA DAL DB
+	// servizio rest di tipo get che al suo interno richiama il metodo che prende i
+	// dati presenti sul DB
 	@GetMapping("/stampaDati")
-	public List<ProjectCrmBean> getDati() {
-		List<ProjectCrmBean> lista = p.getDati();
+	public List<AnagraficaBean> getDati() {
+		List<AnagraficaBean> lista = dbMetod.getDati();
 		return lista;
 	}
 
-	// SERVIZIO CHE LEGGE DAL FILE
+	// servizio rest di tipo get che al suo interno richiama il metodo che legge i
+	// dati dal file di testo
 	@GetMapping("/leggiDati")
 	public ResponseEntity<String> leggiDati() {
 

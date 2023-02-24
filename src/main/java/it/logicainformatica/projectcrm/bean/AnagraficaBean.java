@@ -1,6 +1,7 @@
 package it.logicainformatica.projectcrm.bean;
 
-public class ProjectCrmBean {
+// classe che contiene i set e get dei dati degli utenti
+public class AnagraficaBean {
 
 	int id;
 	String nome;
