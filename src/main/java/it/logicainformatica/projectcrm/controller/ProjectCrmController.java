@@ -36,8 +36,8 @@ public class ProjectCrmController {
 
 	// SERVIZIO CHE STAMPA DAL DB
 	@GetMapping("/stampaDati")
-	public List<ProjectCrmBean> stampaDati() {
-		List<ProjectCrmBean> lista = p.stampaDati();
+	public List<ProjectCrmBean> getDati() {
+		List<ProjectCrmBean> lista = p.getDati();
 		return lista;
 	}
 

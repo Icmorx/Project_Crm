@@ -17,117 +17,127 @@ public class ProjectCrmDB {
 
 	DataBase db = new DataBase();
 
-	// INSERIRE I DATI SUL DB
+	// metodo che serve per inserire i dati dell utente sul DB
 	public void inserisciUtente(ProjectCrmBean p) {
 
-		// CREO L'OGGETTO CONNECTION
+		// creo l'oggetto connection
 		Connection dbconn = null;
 
 		try {
 
-			// VALORIZZO L'OGGETTO CONNECTION
+			// do un valore all'oggetto connection
 			dbconn = db.getConnessione();
 
-			// PREPARO L'ISTRUZIONE SQL
+			// preparo l'istruzione sql
 			PreparedStatement statement = dbconn
 					.prepareStatement("INSERT INTO anagrafica(nome, cognome, telefono) VALUES(?, ?, ?)");
 
-			// SOSTITUISCO IL ? CON UN VALORE REALE
+			// sostituisco i ? con dei valori reali
 			statement.setString(1, p.getNome());
 			statement.setString(2, p.getCognome());
 			statement.setString(3, p.getTelefono());
 
-			// ESEGUO LA QUERY
+			// eseguo la query
 			statement.execute();
 
-		} catch (SQLException e) {
+		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
 			System.out.println("Errore SQL nel metodo stampaDati " + e.getMessage());
-		} catch (Exception e) {
+		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
 			System.out.println("Errore generico nel metodo inserisciUtente" + e.getMessage());
-		} finally {
+		} finally {  // nel finaly chiudo la connessione con il DB
 			try {
 				dbconn.close();
-			} catch (SQLException e) {
+			} catch (SQLException e) { //gestisco eventuali errori di tipo sql
 				e.printStackTrace();
 			}
 		}
 
 	}
 
-	// STAMPARE I DATI DA DB
-	public List<ProjectCrmBean> stampaDati() {
+	// metodo per prendere i dati dal DB
+	public List<ProjectCrmBean> getDati() {
 
-		// CREO L'OGGETTO CONNECTION
+		// creo l'oggetto connection
 		Connection dbconn = null;
 
+		// creo un oggetto di tipo lista 
 		List<ProjectCrmBean> lista = new ArrayList<ProjectCrmBean>();
 
 		try {
 
-			// VALORIZZO L'OGGETTO CONNECTION
+			// do un valore all'oggetto connection
 			dbconn = db.getConnessione();
 
-			// PREPARO L'ISTRUZIONE SQL
+			// preparo l'istruzione sql
 			PreparedStatement statement = dbconn.prepareStatement("SELECT * FROM anagrafica");
 
-			// LANCIO LA QUERY SUL DATA BASE E I RISULTATI ME LI RESTITUSCIE IN UN OGGETTO
-			// DI TIPO RESULTSET
+			// lancio la query sul DB e mi restituisce i dati in un'oggetto di tipo ResultSet
 			ResultSet rs = statement.executeQuery();
 
-			// CICLO I VALORI CHE ARRIVANO DAL DB
+			// ciclo i valori che prendo dal db
 			while (rs.next()) {
 
-				// IMPORTO CLASSE BEAN
+				// importo la classe con i set i e get
 				ProjectCrmBean p = new ProjectCrmBean();
 
-				// INSERISCO IL NOME DELLA COLONNA E MI PRENDO IL VALORE
+				// inserendo il nome della colonna mi prendo il dato contenuto in essa
 				p.setId(rs.getInt("id"));
 				p.setNome(rs.getString("nome"));
 				p.setCognome(rs.getNString("cognome"));
 				p.setTelefono(rs.getString("telefono"));
 
+				// aggiungo i dati presi dalle colonne all'oggetto lista
 				lista.add(p);
 			}
 
-		} catch (SQLException e) {
+		} catch (SQLException e) { //gestisco eventuali errori di tipo sql
 			e.printStackTrace();
 			System.out.println("Errore SQL nel metodo stampaDati " + e.getMessage());
-		} finally {
+		} finally { // nel finaly chiudo la connessione con il DB
 			try {
 				dbconn.close();
-			} catch (SQLException e) {
+			} catch (SQLException e) { //gestisco eventuali errori di tipo sql
 				e.printStackTrace();
 			}
 		}
+		// ritorno l'oggetto lista pieno
 		return lista;
 	}
 
-	// CREO IL FILE E SCRIVO SUL FILE
+	// creo il file e scrivo sul file
 	public void scrivoFile(ProjectCrmBean pB) throws IOException {
 
 		// STRINGA CON LA DIRECTORY DEL FILE TXT
-		//String path = "C:/Project_Crm.txt";
+		// String path = "C:/Project_Crm.txt";
 
-		// CREO UN NUOVO FILE
-		File nuovoFile = new File("Project_Crm.txt");
+		// creo un nuovo file specificando la directory e il nome che dovrà avere il file
+		File file = new File("Project_Crm.txt");
 
-		// CREO L'OGGETO fW PER SCRIVERE I DATI SUL FILE
-		FileWriter fW = new FileWriter(nuovoFile);
+		// creo l'oggetto che mi serve per scrivere i dati sul file e gli passo l'oggetto file
+		FileWriter fW = new FileWriter(file);
 
 		try {
-			// SCRIVO I DATI NEL FILE DI TESTO
-			fW.write(pB.getId() + ",");
-			fW.write(pB.getNome() + ",");
-			fW.write(pB.getCognome() + ",");
-			fW.write(pB.getTelefono() + "\n");
 
-		} catch (Exception e) {
+			// controllo se il file di testo esiste, se esiste scrivo i dati al suo interno
+			if (file.exists()) {
+				fW.write(pB.getId() + ",");
+				fW.write(pB.getNome() + ",");
+				fW.write(pB.getCognome() + ",");
+				fW.write(pB.getTelefono() + "\n");
+			} // se il file non esiste creo un nuovo file e scrivo i dati al suo interno
+			else if (file.createNewFile()) {
+				fW.write(pB.getId() + ",");
+				fW.write(pB.getNome() + ",");
+				fW.write(pB.getCognome() + ",");
+				fW.write(pB.getTelefono() + "\n");
+			}
+
+		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
 			System.out.println("Erroe nel metodo scrivoFile " + e.getMessage());
-		} finally {
-			// CHIUDO L'OGETTO FILEWRITER 
+		} finally { // nel finaly chiudo l'oggetto FileWriter
 			fW.close();
 		}
 	}
