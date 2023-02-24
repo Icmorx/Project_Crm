@@ -65,6 +65,9 @@ public class ProjectCrmController {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Erroe nel servizio rest leggiDati" + e.getMessage());
 		}
 		return new ResponseEntity<String>("Errore", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
