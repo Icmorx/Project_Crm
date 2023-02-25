@@ -51,17 +51,23 @@ public class ServiziRest {
 	public ResponseEntity<String> leggiDati() {
 
 		try {
+			// creo un oggetto file, specificando il nome e la directory del file
 			File file = new File("Project_Crm.txt");
 
+			// creo un oggetto buffered reader per leggere i dati dal file
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 
+			// creo un oggetto string builder per salvare i dati letti dal file
 			StringBuilder sB = new StringBuilder();
 			String line;
+			
+			// Leggo il file riga per riga e aggiungo ogni riga letta allo StringBuilder
 			while ((line = reader.readLine()) != null) {
 				sB.append(line);
 				sB.append("\n");
 			}
 
+			// chiudo il buffered reader
 			reader.close();
 
 			HttpHeaders headers = new HttpHeaders();
@@ -69,8 +75,11 @@ public class ServiziRest {
 			return new ResponseEntity<String>(sB.toString(), headers, HttpStatus.OK);
 
 		} catch (IOException e) {
+			// Gestisco l'eccezione nel caso in cui non sia possibile leggere il file
 			e.printStackTrace();
+			System.out.println("Errore di tipo IO nel servizio rest leggiDati " + e.getMessage());
 		} catch (Exception e) {
+			// Gestisco eventuali eccezioni generiche
 			e.printStackTrace();
 			System.out.println("Erroe nel servizio rest leggiDati" + e.getMessage());
 		}
