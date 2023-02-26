@@ -1,6 +1,8 @@
 # Project_Crm
 
-Questo progetto contiene 1 metodo `POST` e 2 metodi `GET`. Il metodo `POST` permette di scrivere l'anagrafica sul DB e su un file di testo chimato Project_Crm, i metodi `GET` permettono di leggere i dati inseriti in precedenza o dal DB o dal file di testo
+Questo progetto è costituito da 4 classi. Nella classe `DataBase` troviamo la connessione al `DB`, nella classe `MetodiDB` è possibile torvare tutti i metodi che interagiscono con il `DB`, nella classe `AnagraficaBean` troviamo i `set` e i `get` dei dati ed infine nella classe `ServiziRest` troviamo 1 servizio di tipo `post` e due servizi di tipo `get`
+
+Il servizio di tipo `post` permette di inserire i dati immessi sul DB e dentro un file di testo chiamato `Project_Crm`, i servizi di tipo `get` invece permettono di visualizzare i dati presenti o dal DB o dal file di testo
 
 Per inserire i file sul DB ho creato un nuovo DB chiamato `project_crm`, dove al suo interno ho creato la tabella `anagrafica` con le colonne: id, nome, cognome e telefono
 
