@@ -28,13 +28,13 @@ public class ServiziRest {
 	MetodiDB dbMetod = new MetodiDB();
 
 	// servizio rest di tipo post che al suo interno richiama i due metodi che
-	// inseriscono i dati, uno sul DB e uno in file di testo presenti nella classe
+	// inseriscono i dati, uno sul DB e uno in un file di testo presenti nella classe
 	// metodi
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public void inserisciAnagrafica(@RequestBody AnagraficaBean pB) throws IOException {
-		dbMetod.inserisciUtente(pB);
-		dbMetod.writeFile(pB);
+	public void inserisciAnagrafica(@RequestBody AnagraficaBean usrObj) throws IOException {
+		dbMetod.inserisciUtente(usrObj);
+		dbMetod.writeFile(usrObj);
 	}
 
 	// servizio rest di tipo get che al suo interno richiama il metodo che prende i

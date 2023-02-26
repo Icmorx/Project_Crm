@@ -19,7 +19,7 @@ public class MetodiDB {
 	DataBase db = new DataBase();
 
 	// metodo che serve per inserire i dati dell utente sul DB
-	public void inserisciUtente(AnagraficaBean p) {
+	public void inserisciUtente(AnagraficaBean usrObj) {
 
 		// creo l'oggetto connection
 		Connection dbconn = null;
@@ -34,9 +34,9 @@ public class MetodiDB {
 					.prepareStatement("INSERT INTO anagrafica(nome, cognome, telefono) VALUES(?, ?, ?)");
 
 			// sostituisco i ? con dei valori reali
-			statement.setString(1, p.getNome());
-			statement.setString(2, p.getCognome());
-			statement.setString(3, p.getTelefono());
+			statement.setString(1, usrObj.getNome());
+			statement.setString(2, usrObj.getCognome());
+			statement.setString(3, usrObj.getTelefono());
 
 			// eseguo la query
 			statement.execute();
@@ -82,16 +82,16 @@ public class MetodiDB {
 			while (rs.next()) {
 
 				// importo la classe con i set i e get
-				AnagraficaBean p = new AnagraficaBean();
+				AnagraficaBean usrObj= new AnagraficaBean();
 
 				// inserendo il nome della colonna mi prendo il dato contenuto in essa
-				p.setId(rs.getInt("id"));
-				p.setNome(rs.getString("nome"));
-				p.setCognome(rs.getNString("cognome"));
-				p.setTelefono(rs.getString("telefono"));
+				usrObj.setId(rs.getInt("id"));
+				usrObj.setNome(rs.getString("nome"));
+				usrObj.setCognome(rs.getNString("cognome"));
+				usrObj.setTelefono(rs.getString("telefono"));
 
 				// aggiungo i dati presi dalle colonne all'oggetto lista
-				lista.add(p);
+				lista.add(usrObj);
 			}
 
 		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
@@ -109,7 +109,7 @@ public class MetodiDB {
 	}
 
 	// creo il file e scrivo sul file
-	public void writeFile(AnagraficaBean anaBean) throws IOException {
+	public void writeFile(AnagraficaBean usrObj) throws IOException {
 
 		// creo un nuovo file specificando la directory e il nome che dovrà avere il
 		// file
@@ -121,10 +121,10 @@ public class MetodiDB {
 
 		try {
 			// scrivo i dati nel file
-			fW.write(anaBean.getId() + ",");
-			fW.write(anaBean.getNome() + ",");
-			fW.write(anaBean.getCognome() + ",");
-			fW.write(anaBean.getTelefono() + "\n");
+			fW.write(usrObj.getId() + ",");
+			fW.write(usrObj.getNome() + ",");
+			fW.write(usrObj.getCognome() + ",");
+			fW.write(usrObj.getTelefono() + "\n");
 
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
