@@ -18,7 +18,8 @@ public class MetodiDB {
 
 	DataBase db = new DataBase();
 
-	// metodo che serve per inserire i dati dell utente sul DB
+	// metodo che serve per inserire i dati dell utente sul DB che in ingresso vuole
+	// un oggetto di tipo AnagraficaBean
 	public void inserisciUtente(AnagraficaBean usrObj) {
 
 		// creo l'oggetto connection
@@ -38,8 +39,16 @@ public class MetodiDB {
 			statement.setString(2, usrObj.getCognome());
 			statement.setString(3, usrObj.getTelefono());
 
-			// eseguo la query
-			statement.execute();
+			// creo una variabile di tipo boolean ed eseguo la query
+			boolean check = statement.execute();
+
+			// controllo se l'inserimento è andato a buon fine e stampo un messaggio di
+			// coseguenza
+			if (check == false) {
+				System.out.println("Inserimento eseguito");
+			} else {
+				System.out.println("Inserimento fallito");
+			}
 
 		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
@@ -82,7 +91,7 @@ public class MetodiDB {
 			while (rs.next()) {
 
 				// importo la classe con i set i e get
-				AnagraficaBean usrObj= new AnagraficaBean();
+				AnagraficaBean usrObj = new AnagraficaBean();
 
 				// inserendo il nome della colonna mi prendo il dato contenuto in essa
 				usrObj.setId(rs.getInt("id"));
@@ -109,7 +118,7 @@ public class MetodiDB {
 	}
 
 	// creo il file e scrivo sul file
-	public void writeFile(AnagraficaBean usrObj) throws IOException {
+	/*public void writeFile(AnagraficaBean usrObj) throws IOException {
 
 		// creo un nuovo file specificando la directory e il nome che dovrà avere il
 		// file
@@ -123,7 +132,7 @@ public class MetodiDB {
 			// scrivo i dati nel file
 			fW.write(usrObj.getId() + ",");
 			fW.write(usrObj.getNome() + ",");
-			fW.write(usrObj.getCognome() + ",");
+			fW.write(usrObj.getCognome() + ",");  
 			fW.write(usrObj.getTelefono() + "\n");
 
 		} catch (Exception e) { // gestisco eventuali errori generici
@@ -133,5 +142,55 @@ public class MetodiDB {
 			// chiudo l'oggetto FileWriter
 			fW.close();
 		}
+	}*/
+	
+	public void writeFile(AnagraficaBean usrObj) throws IOException {
+
+	    // creo un nuovo file specificando la directory e il nome che dovrà avere il file
+	    File file = new File("Project_Crm.txt");
+
+	    // creo l'oggetto che mi serve per scrivere i dati sul file e gli passo l'oggetto file
+	    FileWriter fW = new FileWriter(file, true); // aggiungo il parametro true per scrivere al fondo del file
+	    
+	    int nameLength = 100;
+	    String name = usrObj.getNome();
+	    int difNameLength = nameLength - name.length();
+	    String space = " ";
+
+	    for (int i = 0; i < difNameLength; i++) {
+	        name += space.replace(" ", "·");
+	    } 
+	    
+	    int lastNameLength = 100;
+	    String lastName = usrObj.getCognome();
+	    int difLastNameLength = lastNameLength - lastName.length();
+
+	    for (int i = 0; i < difLastNameLength; i++) {
+	    	lastName += space.replace(" ", "·");
+	    }
+	    
+	    int telephoneLength = 50;
+	    String telephone = usrObj.getTelefono();
+	    int difTelephoneLength = telephoneLength - telephone.length();
+
+	    for (int i = 0; i < difTelephoneLength; i++) {
+	        telephone += space.replace(" ", "·");
+	    }
+
+	    try {
+	        // scrivo i dati nel file
+	        //fW.write(usrObj.getId() + ",");
+	        fW.write(name);
+	        fW.write(lastName);
+	        fW.write(telephone + "\n");
+
+	    } catch (Exception e) { // gestisco eventuali errori generici
+	        e.printStackTrace();
+	        System.out.println("Errore nel metodo scrivoFile " + e.getMessage());
+	    } finally {
+	        // chiudo l'oggetto FileWriter
+	        fW.close();
+	    }
 	}
+
 }
