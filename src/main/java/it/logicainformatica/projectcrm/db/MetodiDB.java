@@ -117,8 +117,7 @@ public class MetodiDB {
 		return lista;
 	}
 
-	// creo il file e scrivo sul file
-	/*public void writeFile(AnagraficaBean usrObj) throws IOException {
+	public void writeFile(AnagraficaBean usrObj) throws IOException {
 
 		// creo un nuovo file specificando la directory e il nome che dovrà avere il
 		// file
@@ -128,12 +127,43 @@ public class MetodiDB {
 		// l'oggetto file
 		FileWriter fW = new FileWriter(file, true); // aggiungo il parametro true per scrivere al fondo del file
 
+		// Definisco la lunghezza massima del campo "nome" e riempio eventuali spazi
+		// vuoti con caratteri speciali.
+		int nameLength = 100;
+		String name = usrObj.getNome();
+		int difNameLength = nameLength - name.length();
+		String space = " ";
+
+		for (int i = 0; i < difNameLength; i++) {
+			name += space.replace(" ", "·");
+		}
+
+		// Definisco la lunghezza massima del campo "cognome" e riempio eventuali spazi
+		// vuoti con caratteri speciali.
+		int lastNameLength = 100;
+		String lastName = usrObj.getCognome();
+		int difLastNameLength = lastNameLength - lastName.length();
+
+		for (int i = 0; i < difLastNameLength; i++) {
+			lastName += space.replace(" ", "·");
+		}
+
+		// Definisco la lunghezza massima del campo "telefono" e riempio eventuali spazi
+		// vuoti con caratteri speciali.
+		int telephoneLength = 50;
+		String telephone = usrObj.getTelefono();
+		int difTelephoneLength = telephoneLength - telephone.length();
+
+		for (int i = 0; i < difTelephoneLength; i++) {
+			telephone += space.replace(" ", "·");
+		}
+
 		try {
 			// scrivo i dati nel file
-			fW.write(usrObj.getId() + ",");
-			fW.write(usrObj.getNome() + ",");
-			fW.write(usrObj.getCognome() + ",");  
-			fW.write(usrObj.getTelefono() + "\n");
+			// fW.write(usrObj.getId() + ",");
+			fW.write(name);
+			fW.write(lastName);
+			fW.write(telephone + "\n");
 
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
@@ -142,55 +172,6 @@ public class MetodiDB {
 			// chiudo l'oggetto FileWriter
 			fW.close();
 		}
-	}*/
-	
-	public void writeFile(AnagraficaBean usrObj) throws IOException {
-
-	    // creo un nuovo file specificando la directory e il nome che dovrà avere il file
-	    File file = new File("Project_Crm.txt");
-
-	    // creo l'oggetto che mi serve per scrivere i dati sul file e gli passo l'oggetto file
-	    FileWriter fW = new FileWriter(file, true); // aggiungo il parametro true per scrivere al fondo del file
-	    
-	    int nameLength = 100;
-	    String name = usrObj.getNome();
-	    int difNameLength = nameLength - name.length();
-	    String space = " ";
-
-	    for (int i = 0; i < difNameLength; i++) {
-	        name += space.replace(" ", "·");
-	    } 
-	    
-	    int lastNameLength = 100;
-	    String lastName = usrObj.getCognome();
-	    int difLastNameLength = lastNameLength - lastName.length();
-
-	    for (int i = 0; i < difLastNameLength; i++) {
-	    	lastName += space.replace(" ", "·");
-	    }
-	    
-	    int telephoneLength = 50;
-	    String telephone = usrObj.getTelefono();
-	    int difTelephoneLength = telephoneLength - telephone.length();
-
-	    for (int i = 0; i < difTelephoneLength; i++) {
-	        telephone += space.replace(" ", "·");
-	    }
-
-	    try {
-	        // scrivo i dati nel file
-	        //fW.write(usrObj.getId() + ",");
-	        fW.write(name);
-	        fW.write(lastName);
-	        fW.write(telephone + "\n");
-
-	    } catch (Exception e) { // gestisco eventuali errori generici
-	        e.printStackTrace();
-	        System.out.println("Errore nel metodo scrivoFile " + e.getMessage());
-	    } finally {
-	        // chiudo l'oggetto FileWriter
-	        fW.close();
-	    }
 	}
 
 }
