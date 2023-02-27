@@ -135,7 +135,7 @@ public class MetodiDB {
 
 		// Definisco la lunghezza massima del campo "nome" e riempio eventuali spazi
 		// vuoti con caratteri speciali.
-		int nameLength = 100;
+		int nameLength = 50;
 		String name = usrObj.getNome();
 		int difNameLength = nameLength - name.length();
 		String space = " ";
@@ -146,7 +146,7 @@ public class MetodiDB {
 
 		// Definisco la lunghezza massima del campo "cognome" e riempio eventuali spazi
 		// vuoti con caratteri speciali.
-		int lastNameLength = 100;
+		int lastNameLength = 50;
 		String lastName = usrObj.getCognome();
 		int difLastNameLength = lastNameLength - lastName.length();
 
@@ -156,7 +156,7 @@ public class MetodiDB {
 
 		// Definisco la lunghezza massima del campo "telefono" e riempio eventuali spazi
 		// vuoti con caratteri speciali.
-		int telephoneLength = 50;
+		int telephoneLength = 20;
 		String telephone = usrObj.getTelefono(); // definisco l'id da scrivere all'interno del file
 		int difTelephoneLength = telephoneLength - telephone.length();
 
