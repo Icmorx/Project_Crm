@@ -52,7 +52,7 @@ public class MetodiDB {
 
 		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
-			System.out.println("Errore SQL nel metodo stampaDati " + e.getMessage());
+			System.out.println("Errore SQL nel metodo inserisciUtente " + e.getMessage());
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
 			System.out.println("Errore generico nel metodo inserisciUtente" + e.getMessage());
@@ -105,7 +105,7 @@ public class MetodiDB {
 
 		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
-			System.out.println("Errore SQL nel metodo stampaDati " + e.getMessage());
+			System.out.println("Errore SQL nel metodo getDati " + e.getMessage());
 		} finally { // nel finaly chiudo la connessione con il DB
 			try {
 				dbconn.close();
@@ -117,6 +117,9 @@ public class MetodiDB {
 		return lista;
 	}
 
+	// creo una variabile globale per il conteggio degli id per il metodo writeFile
+	int idCounter = 0;
+
 	public void writeFile(AnagraficaBean usrObj) throws IOException {
 
 		// creo un nuovo file specificando la directory e il nome che dovrà avere il
@@ -126,6 +129,9 @@ public class MetodiDB {
 		// creo l'oggetto che mi serve per scrivere i dati sul file e gli passo
 		// l'oggetto file
 		FileWriter fW = new FileWriter(file, true); // aggiungo il parametro true per scrivere al fondo del file
+
+		// incremento il contatore degli id
+		idCounter++;
 
 		// Definisco la lunghezza massima del campo "nome" e riempio eventuali spazi
 		// vuoti con caratteri speciali.
@@ -151,23 +157,33 @@ public class MetodiDB {
 		// Definisco la lunghezza massima del campo "telefono" e riempio eventuali spazi
 		// vuoti con caratteri speciali.
 		int telephoneLength = 50;
-		String telephone = usrObj.getTelefono();
+		String telephone = usrObj.getTelefono(); // definisco l'id da scrivere all'interno del file
 		int difTelephoneLength = telephoneLength - telephone.length();
 
 		for (int i = 0; i < difTelephoneLength; i++) {
 			telephone += space.replace(" ", "·");
 		}
 
+		// Definisco la lunghezza massima del campo "id" e riempio eventuali spazi
+		// vuoti con caratteri speciali.
+		int idLength = 11;
+		String id = String.valueOf(idCounter);
+		int difIdLength = idLength - id.length();
+
+		for (int i = 0; i < difIdLength; i++) {
+			id += space.replace(" ", "·");
+		}
+
 		try {
 			// scrivo i dati nel file
-			// fW.write(usrObj.getId() + ",");
+			fW.write(id);
 			fW.write(name);
 			fW.write(lastName);
 			fW.write(telephone + "\n");
 
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
-			System.out.println("Errore nel metodo scrivoFile " + e.getMessage());
+			System.out.println("Errore nel metodo writeFile " + e.getMessage());
 		} finally {
 			// chiudo l'oggetto FileWriter
 			fW.close();
