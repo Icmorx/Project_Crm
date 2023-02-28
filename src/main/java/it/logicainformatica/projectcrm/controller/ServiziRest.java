@@ -39,7 +39,7 @@ public class ServiziRest {
 
 	// servizio rest di tipo get che al suo interno richiama il metodo che prende i
 	// dati presenti sul DB
-	@GetMapping("/stampaDati")
+	@GetMapping("/getDati")
 	public List<AnagraficaBean> getDati() {
 		List<AnagraficaBean> lista = dbMetod.getDati();
 		return lista;

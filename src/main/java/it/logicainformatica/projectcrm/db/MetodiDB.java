@@ -49,7 +49,7 @@ public class MetodiDB {
 			} else {
 				System.out.println("Inserimento fallito");
 			}
-
+			
 		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
 			System.out.println("Errore SQL nel metodo inserisciUtente " + e.getMessage());
@@ -63,7 +63,6 @@ public class MetodiDB {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	// metodo per prendere i dati dal DB
@@ -102,7 +101,6 @@ public class MetodiDB {
 				// aggiungo i dati presi dalle colonne all'oggetto lista
 				lista.add(usrObj);
 			}
-
 		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
 			System.out.println("Errore SQL nel metodo getDati " + e.getMessage());
@@ -180,7 +178,7 @@ public class MetodiDB {
 			fW.write(name);
 			fW.write(lastName);
 			fW.write(telephone + "\n");
-
+			
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
 			System.out.println("Errore nel metodo writeFile " + e.getMessage());
