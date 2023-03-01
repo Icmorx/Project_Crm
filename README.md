@@ -11,9 +11,9 @@ Per creare la tabella ho usato lo script SQL:
 ```sql
 CREATE TABLE anagrafica (
     id int NOT NULL AUTO_INCREMENT,
-    nome varchar(255) NOT NULL,
-    cognome varchar(255) NOT NULL,
-    telefono varchar(255) NOT NULL,
+    nome varchar(50) NOT NULL,
+    cognome varchar(50) NOT NULL,
+    telefono varchar(20) NOT NULL,
     PRIMARY KEY (id)
 );
 ```
