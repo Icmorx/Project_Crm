@@ -1,6 +1,8 @@
 package it.logicainformatica.projectcrm.db;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -49,18 +51,19 @@ public class MetodiDB {
 			} else {
 				System.out.println("Inserimento fallito");
 			}
-			
+
 		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
-			System.out.println("Errore SQL nel metodo inserisciUtente " + e.getMessage());
+			System.out.println("Errore SQL nel metodo inserisciUtente della classe MetodiDB " + e.getMessage());
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
-			System.out.println("Errore generico nel metodo inserisciUtente" + e.getMessage());
+			System.out.println("Errore generico nel metodo inserisciUtente della classe MetodiDB" + e.getMessage());
 		} finally { // nel finaly chiudo la connessione con il DB
 			try {
 				dbconn.close();
 			} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 				e.printStackTrace();
+				System.out.println("Errore SQL nella chiusura del DB della classe MetodiDB" + e.getMessage());
 			}
 		}
 	}
@@ -103,22 +106,26 @@ public class MetodiDB {
 			}
 		} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 			e.printStackTrace();
-			System.out.println("Errore SQL nel metodo getDati " + e.getMessage());
+			System.out.println("Errore SQL nel metodo getDati della classe MetodiDB" + e.getMessage());
+		} catch (Exception e) { // gestisco eventuali errori generici
+			e.printStackTrace();
+			System.out.println("Errore generico nel metodo getDati della classe MetodiDB" + e.getMessage());
 		} finally { // nel finaly chiudo la connessione con il DB
 			try {
 				dbconn.close();
 			} catch (SQLException e) { // gestisco eventuali errori di tipo sql
 				e.printStackTrace();
+				System.out.println("Errore SQL nella chiusura del DB della classe MetodiDB" + e.getMessage());
 			}
 		}
 		// ritorno l'oggetto lista pieno
 		return lista;
 	}
 
-	// creo una variabile globale per il conteggio degli id per il metodo writeFile
-	int idCounter = 0;
-
 	public void writeFile(AnagraficaBean usrObj) throws IOException {
+
+		// creo una variabile globale per il conteggio degli id per il metodo writeFile
+		int idCounter = 0;
 
 		// creo un nuovo file specificando la directory e il nome che dovrà avere il
 		// file
@@ -127,6 +134,16 @@ public class MetodiDB {
 		// creo l'oggetto che mi serve per scrivere i dati sul file e gli passo
 		// l'oggetto file
 		FileWriter fW = new FileWriter(file, true); // aggiungo il parametro true per scrivere al fondo del file
+
+		// leggo il file per trovare il valore dell'ultimo id scritto
+		BufferedReader bReader = new BufferedReader(new FileReader(file));
+		String line;
+		while ((line = bReader.readLine()) != null) {
+			String value[] = line.split(",");
+			String lsatId = value[0].trim();
+			idCounter = Integer.parseInt(lsatId);
+		}
+		bReader.close();
 
 		// incremento il contatore degli id
 		idCounter++;
@@ -162,14 +179,13 @@ public class MetodiDB {
 			telephone += space.replace(" ", "·");
 		}
 
-		// Definisco la lunghezza massima del campo "id" e riempio eventuali spazi
-		// vuoti con caratteri speciali.
+		// Definisco la lunghezza massima del campo "id"
 		int idLength = 11;
 		String id = String.valueOf(idCounter);
 		int difIdLength = idLength - id.length();
 
 		for (int i = 0; i < difIdLength; i++) {
-			id += space.replace(" ", "·");
+			id += " ";
 		}
 
 		try {
@@ -178,10 +194,10 @@ public class MetodiDB {
 			fW.write(name);
 			fW.write(lastName);
 			fW.write(telephone + "\n");
-			
+
 		} catch (Exception e) { // gestisco eventuali errori generici
 			e.printStackTrace();
-			System.out.println("Errore nel metodo writeFile " + e.getMessage());
+			System.out.println("Errore nel metodo writeFile della classe MetodiDB " + e.getMessage());
 		} finally {
 			// chiudo l'oggetto FileWriter
 			fW.close();
